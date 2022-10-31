@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:to_do_list/services/theme_data.dart';
 import 'package:to_do_list/ui/home_page.dart';
 import 'package:to_do_list/ui/themes.dart';
 
-void main() {
-  runApp(const Myapp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  runApp(Myapp());
 }
 
 class Myapp extends StatefulWidget {
@@ -16,12 +21,12 @@ class Myapp extends StatefulWidget {
 class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: Homepage(),
       debugShowCheckedModeBanner: false,
       theme: Themes.light,
       darkTheme: Themes.dark,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeService().theme,
     );
   }
 }
