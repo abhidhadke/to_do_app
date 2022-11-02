@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 const Color bluishClr = Color(0xFF4e5ae8);
 const Color yellowClr = Color(0xFFFFB746);
@@ -78,4 +79,16 @@ TextStyle get hintTitleStyle {
           color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[600]
       )
   );
+}
+
+SnackBar get snackBar{
+  return SnackBar(elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+    content: AwesomeSnackbarContent(
+    title: 'Required!!',
+    message: 'Title and Note is required!',
+    contentType: ContentType.failure,
+  ),);
+
 }

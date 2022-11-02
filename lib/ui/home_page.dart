@@ -33,6 +33,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      backgroundColor: context.theme.colorScheme.background,
       body: Column(
         children: [
           _addTaskBar(),
@@ -82,7 +83,7 @@ class _HomepageState extends State<Homepage> {
   }
   _addTaskBar(){
     return Container(
-      padding: EdgeInsets.only(left: 20,right: 20,top: 10),
+      padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -122,7 +123,7 @@ class _HomepageState extends State<Homepage> {
       ),
       actions: [
         CircleAvatar(backgroundColor: Colors.transparent,child: Image.asset('assets/profile.png',width: 30,)),
-        SizedBox(width: 20,)
+        const SizedBox(width: 20,)
       ],
     );
   }

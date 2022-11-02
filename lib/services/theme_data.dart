@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
+
 class ThemeService{
 
   final  _box = GetStorage();
@@ -15,5 +16,7 @@ class ThemeService{
     Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
     _saveThemeMode(!_loadThemeFromBox());
   }
+
+
 
 }
