@@ -4,6 +4,7 @@ import 'package:to_do_list/services/notification_services.dart';
 import 'package:to_do_list/services/theme_data.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_list/ui/add_task_bar.dart';
 import 'package:to_do_list/ui/themes.dart';
 import 'package:to_do_list/ui/widgets/button.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -96,7 +97,7 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
           ),
-          MyButton(label: '+ Add Task', onTap: ()=>null)
+          MyButton(label: '+ Add Task', onTap: ()=>Get.to(() => AddTaskPage()))
         ],
       ),
     );
