@@ -41,7 +41,7 @@ dependencies:
   flutter_local_notifications:
   flutter_native_timezone:
   intl:
-  google_fonts:
+  google_fonts: ^4.0.3
   date_picker_timeline:
   awesome_snackbar_content:
   sqflite:

@@ -127,10 +127,10 @@ class _HomepageState extends State<Homepage> {
         onTap: (){
           debugPrint('tapped');
           ThemeService().changeTheme();
-          notifyHelper.displayNotification(
-            title: 'Theme Changed',
-              body: Get.isDarkMode ? 'Activated Light Theme' : 'Activated Dark Theme'
-          );
+          // notifyHelper.displayNotification(
+          //   title: 'Theme Changed',
+          //     body: Get.isDarkMode ? 'Activated Light Theme' : 'Activated Dark Theme'
+          // );
         },
         child: Icon( Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_outlined,
         size: 20,
@@ -227,12 +227,12 @@ class _HomepageState extends State<Homepage> {
         child: Container(
 
           padding: const EdgeInsets.only(top: 4),
-          height: MediaQuery.of(context).size.height*0.24,
+          height: MediaQuery.of(context).size.height*0.27,
           color: Get.isDarkMode ? darkGreyClr : Colors.white,
           child: Column(
             children: [
               Container(
-                height: 6,
+                height: 9,
                 width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -243,12 +243,19 @@ class _HomepageState extends State<Homepage> {
               _bottomSheetButton(
                   label: "Task Completed",
                   onTap: (){
-                    _taskcontroller.delete(task);
                     _taskcontroller.getTasks();
                     Get.back();
                   },
                   clr: primaryClr,
                   context: context,),
+              _bottomSheetButton(
+                  label: 'Delete Task',
+                  onTap: (){
+                    _taskcontroller.delete(task);
+                  },
+                  clr: pinkClr,
+                  context: context
+              ),
               _bottomSheetButton(
                 label: "Close",
                 onTap: (){

@@ -24,7 +24,7 @@ class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Homepage(),
+      home: const Homepage(),
       debugShowCheckedModeBanner: false,
       theme: Themes.light,
       darkTheme: Themes.dark,

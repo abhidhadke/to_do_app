@@ -8,7 +8,7 @@ const Color yellowClr = Color(0xFFFFB746);
 const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = bluishClr;
-const Color darkGreyClr = Color(0xFF121212);
+const Color darkGreyClr = Color(0xFF1F1B24);
 const Color darkHeaderClr = Color(0xFF424242);
 
 class Themes{
@@ -22,17 +22,16 @@ class Themes{
   );
 
   static final dark = ThemeData(
-      brightness: Brightness.dark,
     primaryColor: darkGreyClr,
     colorScheme: const ColorScheme.dark(
-      background: Colors.black45
+      background: Colors.black38
     )
   );
 
 }
 
 TextStyle get subHeadingStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
@@ -42,7 +41,7 @@ TextStyle get subHeadingStyle {
 }
 
 TextStyle get headingStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.bold,
@@ -52,7 +51,7 @@ TextStyle get headingStyle {
 }
 
 TextStyle get titleStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -62,7 +61,7 @@ TextStyle get titleStyle {
 }
 
 TextStyle get subTitleStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
@@ -72,7 +71,7 @@ TextStyle get subTitleStyle {
 }
 
 TextStyle get hintTitleStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
