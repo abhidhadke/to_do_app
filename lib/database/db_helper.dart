@@ -41,7 +41,7 @@ class DBHelper{
   }
 
   static Future<List<Map<String, dynamic>>> query(String date) async {
-    debugPrint('query func called');
+    //debugPrint('query func called');
     return await _db!.query(_tableName, where: 'date=?', whereArgs: [date]);
   }
 

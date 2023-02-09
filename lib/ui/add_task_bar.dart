@@ -26,7 +26,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   int _selectedRemind = 5;
   List<int> remindList = [ 5, 10, 15, 20 ];
   String _selectedRepeat = "None";
-  List<String> repeatList = ["None", "Daily", "Weekly"];
+  List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
   int _selectedColor = 0;
 
 
@@ -75,7 +75,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 widget: DropdownButton(
                   icon: const Icon(Icons.arrow_drop_down_outlined,color: Colors.grey,),
                   iconSize: 32,
-                  elevation: 4,
+                  elevation: 8,
+                  dropdownColor: dropDownClr,
+                  borderRadius: BorderRadius.circular(15),
                   underline: Container(height: 0,),
                   style: subTitleStyle,
                   items: remindList.map<DropdownMenuItem<String>>((int value){
@@ -95,7 +97,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 widget: DropdownButton(
                   icon: const Icon(Icons.arrow_drop_down_outlined,color: Colors.grey,),
                   iconSize: 32,
-                  elevation: 4,
+                  elevation: 8,
+                  dropdownColor: dropDownClr,
+                  borderRadius: BorderRadius.circular(15),
                   underline: Container(height: 0,),
                   style: subTitleStyle,
                   items: repeatList.map<DropdownMenuItem<String>>((String value){

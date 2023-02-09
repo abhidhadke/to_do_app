@@ -10,6 +10,7 @@ const Color white = Colors.white;
 const primaryClr = bluishClr;
 const Color darkGreyClr = Color(0xFF1F1B24);
 const Color darkHeaderClr = Color(0xFF424242);
+const Color dropDownClr = Color(0xFFA1E1FA);
 
 class Themes{
 
