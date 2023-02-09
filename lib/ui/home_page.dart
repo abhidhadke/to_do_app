@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_list/controllers/task_controller.dart';
+import 'package:to_do_list/database/db_helper.dart';
 import 'package:to_do_list/models/tasks.dart';
 import 'package:to_do_list/services/notification_services.dart';
 import 'package:to_do_list/services/theme_data.dart';
@@ -152,27 +153,7 @@ class _HomepageState extends State<Homepage> {
               Task task = _taskcontroller.taskList[index];
               var debug = task.toJson();
               debugPrint('$debug');
-              if(task.repeat == 'Daily'){
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                debugPrint('Tapped');
-                                _showBottomOption(context, task);
-                              },
-                              child: TaskTile(task),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                );
-              }
-              if(task.date == DateFormat.yMd().format(_selectedDate)){
+              if(task.date == DateFormat('yyyy-MM-dd').format(_selectedDate)){
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -225,7 +206,6 @@ class _HomepageState extends State<Homepage> {
       ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Container(
-
           padding: const EdgeInsets.only(top: 4),
           height: MediaQuery.of(context).size.height*0.27,
           color: Get.isDarkMode ? darkGreyClr : Colors.white,
@@ -240,18 +220,42 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
               const Spacer(),
-              _bottomSheetButton(
-                  label: "Task Completed",
-                  onTap: (){
-                    _taskcontroller.getTasks();
-                    Get.back();
-                  },
-                  clr: primaryClr,
-                  context: context,),
+
+              Visibility(
+                visible: (task.isCompleted == 0),
+                  child: _bottomSheetButton(
+                label: "Task Completed",
+                onTap: () async {
+                  if(task.repeat == 'None'){
+                    _taskcontroller.taskComplete(task);
+                  }
+                  else if(task.repeat == 'Weekly'){
+                    DateTime date = DateTime.parse(task.date!);
+                    date = date.add(const Duration(days: 7));
+                    String dateString = DateFormat('yyyy-MM-dd').format(date);
+                    debugPrint('next date is $dateString');
+                    await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
+
+                  }else if(task.repeat == 'Daily'){
+
+                    DateTime date = DateTime.parse(task.date!);
+                    date = date.add(const Duration(days: 1));
+                      String dateString = DateFormat('yyyy-MM-dd').format(date);
+                    debugPrint('next date is $dateString');
+                    await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
+                  }
+
+                  _taskcontroller.getTasks();
+                  Get.back();
+                },
+                clr: primaryClr,
+                context: context,)),
               _bottomSheetButton(
                   label: 'Delete Task',
                   onTap: (){
                     _taskcontroller.delete(task);
+                    _taskcontroller.getTasks();
+                    Get.back();
                   },
                   clr: pinkClr,
                   context: context

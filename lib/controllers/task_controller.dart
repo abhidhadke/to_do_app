@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list/database/db_helper.dart';
 import 'package:to_do_list/models/tasks.dart';
@@ -19,6 +20,14 @@ class TaskController extends GetxController{
   void getTasks() async {
     List<Map<String,dynamic>> tasks = await DBHelper.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+  }
+
+  void taskComplete(Task task) async {
+    await DBHelper.taskCompleted(task);
+  }
+
+  void editDate(Task task, String date) async{
+    await DBHelper.editDate(task, date);
   }
 
   void delete(Task task){

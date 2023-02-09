@@ -28,7 +28,7 @@ class Task{
     title = json['title'];
     note = json['note'];
     isCompleted = json['isCompleted'];
-    date = json['date'];
+    date = json['date'].toString();
     startTime = json['startTime'];
     endTime = json['endTime'];
     color = json['color'];

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:to_do_list/models/tasks.dart';
 
@@ -43,6 +44,17 @@ class DBHelper{
   static Future<List<Map<String, dynamic>>> query() async {
     debugPrint('query func called');
     return await _db!.query(_tableName);
+  }
+
+  static Future<List<Map<String, dynamic>>> taskCompleted(Task task) async{
+    String sql = 'UPDATE $_tableName SET isCompleted = 1 WHERE id = ${task.id}';
+    return await _db!.rawQuery(sql);
+  }
+
+  static Future editDate(Task task, String date) async{
+    debugPrint('this is final $date');
+    String sql = 'UPDATE $_tableName SET date =? WHERE id =?';
+    return await _db!.rawUpdate(sql, [date, '${task.id}']);
   }
 
   static delete (Task task) async {

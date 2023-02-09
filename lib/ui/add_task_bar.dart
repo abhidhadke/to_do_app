@@ -45,7 +45,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               style: headingStyle,),
               MyInputField(title: 'Title', hint: 'Enter your title here',controller: _titleController,),
               MyInputField(title: 'Note', hint: 'Enter note here', controller: _noteController,),
-              MyInputField(title: 'Date', hint: DateFormat.yMd().format(_selectedDate),
+              MyInputField(title: 'Date', hint: DateFormat('yyyy-MM-dd').format(_selectedDate),
               widget: IconButton(
                   onPressed: (){
                     _getDateFromUser();
@@ -236,7 +236,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         task: Task(
             note: _noteController.text,
             title: _titleController.text,
-            date: DateFormat.yMd().format(_selectedDate),
+            date: DateFormat('yyyy-MM-dd').format(_selectedDate),
             startTime: _startTime,
             endTime: _endTime,
             remind: _selectedRemind,
