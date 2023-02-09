@@ -35,7 +35,6 @@ class _HomepageState extends State<Homepage> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    _taskController.getTasks();
 
   }
 
@@ -113,7 +112,8 @@ class _HomepageState extends State<Homepage> {
           MyButton(label: '+ Add Task',
               onTap: () async {
             await Get.to(() => const AddTaskPage());
-            _taskController.getTasks();
+            _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
+
           }
           )
         ],
@@ -145,16 +145,10 @@ class _HomepageState extends State<Homepage> {
     );
   }
   _showTasks(){
-    List finalList = [];
-    for(int i = 0; i < _taskController.taskList.length; i++){
-      Task task = _taskController.taskList[i];
-      if(task.date == DateFormat('yyyy-MM-dd').format(_selectedDate)){
-        finalList.add(task);
-      }
-    }
+    _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
     return Expanded(
         child: Obx( () {
-          return finalList.isEmpty ?
+          return _taskController.taskList.isEmpty ?
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -165,9 +159,9 @@ class _HomepageState extends State<Homepage> {
           )
               :
           ListView.builder(
-            itemCount: finalList.length,
+            itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
-              Task task = finalList[index];
+              Task task = _taskController.taskList[index];
               var debug = task.toJson();
               debugPrint('$debug');
                 return AnimationConfiguration.staggeredList(
@@ -221,7 +215,7 @@ class _HomepageState extends State<Homepage> {
         borderRadius: BorderRadius.circular(15),
         child: Container(
           padding: const EdgeInsets.only(top: 4),
-          height: MediaQuery.of(context).size.height*0.27,
+          height: task.isCompleted == 1 ? MediaQuery.of(context).size.height*0.19 : MediaQuery.of(context).size.height*0.27,
           color: Get.isDarkMode ? darkGreyClr : Colors.white,
           child: Column(
             children: [
@@ -259,7 +253,7 @@ class _HomepageState extends State<Homepage> {
                     await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
                   }
 
-                  _taskController.getTasks();
+                  _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
                   Get.back();
                 },
                 clr: primaryClr,
@@ -268,7 +262,7 @@ class _HomepageState extends State<Homepage> {
                   label: 'Delete Task',
                   onTap: (){
                     _taskController.delete(task);
-                    _taskController.getTasks();
+                    _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
                     Get.back();
                   },
                   clr: pinkClr,

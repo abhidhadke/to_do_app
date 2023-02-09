@@ -40,9 +40,9 @@ class DBHelper{
     return await _db?.insert(_tableName, task!.toJson()) ?? 1;
   }
 
-  static Future<List<Map<String, dynamic>>> query() async {
+  static Future<List<Map<String, dynamic>>> query(String date) async {
     debugPrint('query func called');
-    return await _db!.query(_tableName);
+    return await _db!.query(_tableName, where: 'date=?', whereArgs: [date]);
   }
 
   static Future<List<Map<String, dynamic>>> taskCompleted(Task task) async{
