@@ -4,6 +4,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:to_do_list/ui/home_page.dart';
 import '../models/tasks.dart';
 
 
@@ -46,11 +47,11 @@ class NotifyHelper{
 
   Future selectNotification(NotificationResponse? payload) async {
     if (payload != null) {
-      debugPrint('notification payload: $payload');
+      debugPrint('notification payload: ${payload.payload}');
     } else {
       debugPrint("Notification Done");
     }
-    Get.to(()=>Container(color: Colors.blue,));
+    Get.to(()=>const Homepage());
   }
 
   Future onDidReceiveLocalNotification(
@@ -99,7 +100,8 @@ class NotifyHelper{
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time
+        matchDateTimeComponents: DateTimeComponents.time,
+      payload: '${task.title} || ${task.note}'
     );
   }
 

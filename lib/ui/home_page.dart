@@ -165,6 +165,7 @@ class _HomepageState extends State<Homepage> {
               var debug = task.toJson();
               debugPrint('$debug');
               DateTime dateTime = DateFormat.jm().parse(task.startTime.toString());
+              dateTime.subtract(Duration(minutes: task.remind!));
               var myTime = DateFormat('HH:mm').format(dateTime);
              if(task.isCompleted == 0){
                NotifyHelper().scheduledNotification(
