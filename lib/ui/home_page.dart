@@ -26,6 +26,8 @@ class _HomepageState extends State<Homepage> {
   DateTime _selectedDate = DateTime.now();
   final _taskController = Get.put(TaskController());
   var notifyHelper;
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -143,15 +145,31 @@ class _HomepageState extends State<Homepage> {
     );
   }
   _showTasks(){
+    List finalList = [];
+    for(int i = 0; i < _taskController.taskList.length; i++){
+      Task task = _taskController.taskList[i];
+      if(task.date == DateFormat('yyyy-MM-dd').format(_selectedDate)){
+        finalList.add(task);
+      }
+    }
     return Expanded(
         child: Obx( () {
-          return ListView.builder(
-            itemCount: _taskController.taskList.length,
+          return finalList.isEmpty ?
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('assets/tasks.png'),
+              Center(child: Text('No available Tasks.', style: hintTitleStyle,))
+            ],
+          )
+              :
+          ListView.builder(
+            itemCount: finalList.length,
             itemBuilder: (_, index) {
-              Task task = _taskController.taskList[index];
+              Task task = finalList[index];
               var debug = task.toJson();
               debugPrint('$debug');
-              if(task.date == DateFormat('yyyy-MM-dd').format(_selectedDate)){
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
@@ -170,9 +188,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                     )
                 );
-              }else{
-                return Container();
-              }
+
             },
           );
         }
