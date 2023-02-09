@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_list/controllers/task_controller.dart';
 import 'package:to_do_list/ui/themes.dart';
 import 'package:to_do_list/ui/widgets/button.dart';
@@ -80,7 +81,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   items: remindList.map<DropdownMenuItem<String>>((int value){
                     return DropdownMenuItem(
                       value: value.toString(),
-                      child: Text(value.toString()),);
+                      child: Text(value.toString(), style: GoogleFonts.poppins(),),);
                   }
                   ).toList(),
                   onChanged: (String? newValue){
@@ -100,7 +101,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   items: repeatList.map<DropdownMenuItem<String>>((String value){
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value, style: const TextStyle(color: Colors.grey))
+                      child: Text(value, style: GoogleFonts.poppins())
                     );
                   }).toList(),
                   onChanged: (String? newValue){

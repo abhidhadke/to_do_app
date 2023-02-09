@@ -24,7 +24,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   DateTime _selectedDate = DateTime.now();
-  final _taskcontroller = Get.put(TaskController());
+  final _taskController = Get.put(TaskController());
   var notifyHelper;
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _HomepageState extends State<Homepage> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-    _taskcontroller.getTasks();
+    _taskController.getTasks();
 
   }
 
@@ -99,21 +99,19 @@ class _HomepageState extends State<Homepage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(DateFormat.yMMMMd().format(DateTime.now()),
-                  style:subHeadingStyle,),
-                Text('Today',
-                  style: headingStyle,),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(DateFormat.yMMMMd().format(DateTime.now()),
+                style:subHeadingStyle,),
+              Text('Today',
+                style: headingStyle,),
+            ],
           ),
           MyButton(label: '+ Add Task',
               onTap: () async {
-            await Get.to(() => AddTaskPage());
-            _taskcontroller.getTasks();
+            await Get.to(() => const AddTaskPage());
+            _taskController.getTasks();
           }
           )
         ],
@@ -148,9 +146,9 @@ class _HomepageState extends State<Homepage> {
     return Expanded(
         child: Obx( () {
           return ListView.builder(
-            itemCount: _taskcontroller.taskList.length,
+            itemCount: _taskController.taskList.length,
             itemBuilder: (_, index) {
-              Task task = _taskcontroller.taskList[index];
+              Task task = _taskController.taskList[index];
               var debug = task.toJson();
               debugPrint('$debug');
               if(task.date == DateFormat('yyyy-MM-dd').format(_selectedDate)){
@@ -227,7 +225,7 @@ class _HomepageState extends State<Homepage> {
                 label: "Task Completed",
                 onTap: () async {
                   if(task.repeat == 'None'){
-                    _taskcontroller.taskComplete(task);
+                    _taskController.taskComplete(task);
                   }
                   else if(task.repeat == 'Weekly'){
                     DateTime date = DateTime.parse(task.date!);
@@ -245,7 +243,7 @@ class _HomepageState extends State<Homepage> {
                     await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
                   }
 
-                  _taskcontroller.getTasks();
+                  _taskController.getTasks();
                   Get.back();
                 },
                 clr: primaryClr,
@@ -253,8 +251,8 @@ class _HomepageState extends State<Homepage> {
               _bottomSheetButton(
                   label: 'Delete Task',
                   onTap: (){
-                    _taskcontroller.delete(task);
-                    _taskcontroller.getTasks();
+                    _taskController.delete(task);
+                    _taskController.getTasks();
                     Get.back();
                   },
                   clr: pinkClr,
