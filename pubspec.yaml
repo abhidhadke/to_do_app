@@ -45,6 +45,7 @@ dependencies:
   date_picker_timeline:
   awesome_snackbar_content:
   sqflite:
+  timezone:
   flutter_staggered_animations:
 
 dev_dependencies:

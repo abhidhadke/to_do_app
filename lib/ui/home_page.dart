@@ -164,6 +164,14 @@ class _HomepageState extends State<Homepage> {
               Task task = _taskController.taskList[index];
               var debug = task.toJson();
               debugPrint('$debug');
+              DateTime dateTime = DateFormat.jm().parse(task.startTime.toString());
+              var myTime = DateFormat('HH:mm').format(dateTime);
+             if(task.isCompleted == 0){
+               NotifyHelper().scheduledNotification(
+                   int.parse(myTime.toString().split(":")[0]),
+                   int.parse(myTime.toString().split(":")[1]),
+                   task);
+             }
                 return AnimationConfiguration.staggeredList(
                     position: index,
                     child: SlideAnimation(
