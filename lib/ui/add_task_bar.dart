@@ -27,7 +27,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   List<int> remindList = [ 5, 10, 15, 20 ];
   String _selectedRepeat = "None";
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
-  int _selectedColor = 0;
+  int _selectedColor = 2;
+  List<String> toolTip = ['Top priority', 'Medium Priority', 'Low Priority'];
 
 
 
@@ -171,26 +172,33 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _getTimeFromUser({required bool isStartTime}) async {
-    var pickedTime = await _showTimePicker();
-    String formattedTime = pickedTime.format(context);
-    if(pickedTime == null){
-      debugPrint('No time');
-    }else if(isStartTime == true){
-      setState(() {
-        _startTime = formattedTime;
-      });
-    }
-    else if (isStartTime == false){
-      setState(() {
-        _endTime = formattedTime;
-      });
+    try{
+      var pickedTime = await _showTimePicker();
+      if(pickedTime != null){
+        String formattedTime = pickedTime.format(context);
+        if(pickedTime == null){
+          debugPrint('No time');
+        }else if(isStartTime == true){
+          setState(() {
+            _startTime = formattedTime;
+          });
+        }
+        else if (isStartTime == false){
+          setState(() {
+            _endTime = formattedTime;
+          });
+      }
+      }
+    }catch(e){
+      debugPrint('$e');
     }
   }
 
   _showTimePicker(){
     return showTimePicker(
-      initialEntryMode: TimePickerEntryMode.input,
-        context: context, 
+      initialEntryMode: TimePickerEntryMode.dialOnly,
+        context: context,
+        orientation: Orientation.portrait,
         initialTime: TimeOfDay(
             hour: int.parse(_startTime.split(':')[0]),
             minute: int.parse(_startTime.split(':')[1].split(' ')[0])
@@ -206,23 +214,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
         const SizedBox(height: 8,),
         Wrap(
           children: List<Widget>.generate(3, (int index){
-            return GestureDetector(
-              onTap: (){
-                setState(() {
-                  _selectedColor = index;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: CircleAvatar(
-                  radius: 13,
-                  backgroundColor: index == 0 ? primaryClr : index == 1 ? pinkClr : yellowClr,
-                  child: _selectedColor == index ? const Icon(Icons.done, color: Colors.white,size: 15) : Container(),
+            return Tooltip(
+              textStyle: GoogleFonts.poppins(
+                color: Colors.white
+              ),
+
+              message: toolTip[index],
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _selectedColor = index;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: CircleAvatar(
+                    radius: 13,
+                    backgroundColor: index == 0 ? pinkClr : index == 1 ? yellowClr : primaryClr,
+                    child: _selectedColor == index ? const Icon(Icons.done, color: Colors.white,size: 15) : Container(),
+                  ),
                 ),
               ),
             );
           }),
-        )
+        ),
+
       ],
     );
   }
@@ -231,8 +247,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty){
       _addTasktoDB();
       Get.back();
+      ScaffoldMessenger.of(context).showSnackBar(taskAddedBar);
     }else if (_titleController.text.isEmpty || _noteController.text.isEmpty){
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBarRequired);
     }
   }
 

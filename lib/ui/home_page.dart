@@ -41,13 +41,15 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: _appBar(),
       backgroundColor: context.theme.colorScheme.background,
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           _addTaskBar(),
           _addDateBar(),
-          const SizedBox(height: 15,),
+          SizedBox(height: MediaQuery.of(context).size.height*0.014,),
           _showTasks(),
 
         ],
@@ -146,57 +148,79 @@ class _HomepageState extends State<Homepage> {
   }
   _showTasks(){
     _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
-    return Expanded(
-        child: Obx( () {
-          return _taskController.taskList.isEmpty ?
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/tasks.png'),
-              Center(child: Text('No available Tasks.', style: hintTitleStyle,))
-            ],
-          )
-              :
-          ListView.builder(
-            itemCount: _taskController.taskList.length,
-            itemBuilder: (_, index) {
-              Task task = _taskController.taskList[index];
-              var debug = task.toJson();
-              debugPrint('$debug');
-              DateTime dateTime = DateFormat.jm().parse(task.startTime.toString());
-              dateTime.subtract(Duration(minutes: task.remind!));
-              var myTime = DateFormat('HH:mm').format(dateTime);
-             if(task.isCompleted == 0){
-               NotifyHelper().scheduledNotification(
-                   int.parse(myTime.toString().split(":")[0]),
-                   int.parse(myTime.toString().split(":")[1]),
-                   task);
-             }
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                debugPrint('Tapped');
-                                _showBottomOption(context, task);
-                              },
-                              child: TaskTile(task),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                );
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        height: MediaQuery.of(context).size.height*0.614,
 
-            },
-          );
-        }
-        )
-        );
+        decoration: BoxDecoration(
+
+          color:  context.theme.colorScheme.tertiary,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15)
+          )
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 15,),
+            Expanded(
+                child: Obx( () {
+                  return _taskController.taskList.isEmpty ?
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/tasks.png'),
+                      Center(child: Text('No available Tasks.', style: hintTitleStyle,))
+                    ],
+                  )
+                      :
+                  ListView.builder(
+                    itemCount: _taskController.taskList.length,
+                    itemBuilder: (_, index) {
+                      Task task = _taskController.taskList[index];
+                      var debug = task.toJson();
+                      debugPrint('$debug');
+                      DateTime dateTime = DateFormat.jm().parse(task.startTime.toString());
+                      dateTime = dateTime.subtract(Duration(minutes: task.remind!));
+                      debugPrint('$dateTime');
+                      var myTime = DateFormat('HH:mm').format(dateTime);
+                      //debugPrint(myTime);
+                     if(task.isCompleted == 0){
+                       NotifyHelper().scheduledNotification(
+                           int.parse(myTime.toString().split(":")[0]),
+                           int.parse(myTime.toString().split(":")[1]),
+                           task);
+                     }
+                        return AnimationConfiguration.staggeredList(
+                            position: index,
+                            child: SlideAnimation(
+                              child: FadeInAnimation(
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: (){
+                                        debugPrint('Tapped');
+                                        _showBottomOption(context, task);
+                                      },
+                                      child: TaskTile(task),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        );
+
+                    },
+                  );
+                }
+                )
+                ),
+          ],
+        ),
+      ),
+    );
   }
   _bottomSheetButton({required String label, required Function()? onTap, required Color clr, bool isClose = false, required BuildContext context}){
     return GestureDetector(
@@ -268,7 +292,7 @@ class _HomepageState extends State<Homepage> {
                     debugPrint('next date is $dateString');
                     await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
                   }
-
+                  ScaffoldMessenger.of(context).showSnackBar(todayCompleted);
                   _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
                   Get.back();
                 },
@@ -279,6 +303,7 @@ class _HomepageState extends State<Homepage> {
                   onTap: (){
                     _taskController.delete(task);
                     _taskController.getTasks(DateFormat('yyyy-MM-dd').format(_selectedDate));
+                    ScaffoldMessenger.of(context).showSnackBar(taskDeletedBar);
                     Get.back();
                   },
                   clr: pinkClr,

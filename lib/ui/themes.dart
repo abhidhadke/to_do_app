@@ -15,17 +15,21 @@ const Color dropDownClr = Color(0xFFA1E1FA);
 class Themes{
 
   static final light = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: primaryClr,
     colorScheme: const ColorScheme.light(
-     background: Colors.white
+     background: Color(0xffF0D5FF),
+      tertiary: Color(0xffE3E4FA)
     )
   );
 
   static final dark = ThemeData(
+    useMaterial3: true,
     primaryColor: darkGreyClr,
     colorScheme: const ColorScheme.dark(
-      background: Colors.black38
+      background: Color(0xff343434),
+      tertiary: Color(0xff36454F)
     )
   );
 
@@ -55,7 +59,7 @@ TextStyle get titleStyle {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           color: Get.isDarkMode ? Colors.white : Colors.black
       )
   );
@@ -65,7 +69,7 @@ TextStyle get subTitleStyle {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
           color: Get.isDarkMode ? Colors.white : Colors.black
       )
   );
@@ -75,14 +79,15 @@ TextStyle get hintTitleStyle {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 15,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[600]
       )
   );
 }
 
-SnackBar get snackBar{
-  return SnackBar(elevation: 0,
+SnackBar get snackBarRequired{
+  return SnackBar(
+    elevation: 0,
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     content: AwesomeSnackbarContent(
@@ -90,5 +95,44 @@ SnackBar get snackBar{
     message: 'Title and Note is required!',
     contentType: ContentType.failure,
   ),);
+
+}
+
+SnackBar get taskAddedBar{
+  return SnackBar(
+    elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+    content: AwesomeSnackbarContent(
+      title: 'Success!!',
+      message: 'Task added successfully!',
+      contentType: ContentType.success,
+    ),);
+
+}
+
+SnackBar get taskDeletedBar{
+  return SnackBar(
+    elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+    content: AwesomeSnackbarContent(
+      title: 'Deleted!!',
+      message: 'Task deleted successfully!',
+      contentType: ContentType.success,
+    ),);
+
+}
+
+SnackBar get todayCompleted{
+  return SnackBar(
+    elevation: 0,
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.transparent,
+    content: AwesomeSnackbarContent(
+      title: 'Hooray!!',
+      message: 'Task completed for today...Good job!!',
+      contentType: ContentType.success,
+    ),);
 
 }

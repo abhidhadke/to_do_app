@@ -28,10 +28,10 @@ class TaskTile extends StatelessWidget {
               children: [
                 Text(
                   task?.title??"",
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.poppins(
                     textStyle: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white),
                   ),
                 ),
@@ -49,17 +49,42 @@ class TaskTile extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       "${task!.startTime} - ${task!.endTime}",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.poppins(
                         textStyle:
                         TextStyle(fontSize: 13, color: Colors.grey[100]),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+               Visibility(
+                 visible: !(task!.repeat == 'None'),
+                   child: Column(
+                 children: [
+                   const SizedBox(height: 5,),
+                   Row(
+                     children: [
+                       Icon
+                         (Icons.arrow_right_rounded,
+                         color: Colors.grey[200],
+                         size: 18,
+                       ),
+                       Text("${_getReminder(task!.repeat!)} reminder",
+                       style: GoogleFonts.poppins(
+                         textStyle: TextStyle(
+                             fontSize: 15,
+                             color: Colors.grey[100]
+                         )
+                       ),
+                       ),
+
+                     ],
+                   ),
+                 ],
+               )),
+                const SizedBox(height: 10),
                 Text(
                   task?.note??"",
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.poppins(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
                   ),
                 ),
@@ -76,7 +101,7 @@ class TaskTile extends StatelessWidget {
             quarterTurns: 3,
             child: Text(
               task!.isCompleted == 1 ? "COMPLETED" : "TODO",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -92,13 +117,28 @@ class TaskTile extends StatelessWidget {
   _getBGClr(int no) {
     switch (no) {
       case 0:
-        return bluishClr;
-      case 1:
         return pinkClr;
-      case 2:
+      case 1:
         return yellowClr;
+      case 2:
+        return bluishClr;
       default:
         return bluishClr;
+    }
+  }
+
+  _getReminder(String repeat){
+    switch(repeat){
+      case 'None':
+        return '';
+      case 'Daily':
+        return 'Daily';
+      case 'Weekly':
+        return 'Weekly';
+      case 'Monthly':
+        return 'Monthly';
+      default:
+        return '';
     }
   }
 }

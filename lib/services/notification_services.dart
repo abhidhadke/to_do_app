@@ -90,8 +90,8 @@ class NotifyHelper{
   scheduledNotification(int hour, int min, Task task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         task.id!.toInt(),
+        'Hey, friendly reminder to do your task!',
         task.title,
-        task.note,
         _convertTime(hour, min),
         //tz.TZDateTime.now(tz.local).add(Duration(hours: hour, minutes: min)),
         const NotificationDetails(
