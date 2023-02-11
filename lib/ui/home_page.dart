@@ -285,7 +285,8 @@ class _HomepageState extends State<Homepage> {
                     debugPrint('next date is $dateString');
                     await DBHelper.editDate(task, DateFormat('yyyy-MM-dd').format(date));
                   }
-                  else if(task.repeat == 'Monthly '){
+                  else if(task.repeat == 'Monthly'){
+                    debugPrint('monthly');
                     DateTime date = DateTime.parse(task.date!);
                     date = date.add(const Duration(days: 30));
                     String dateString = DateFormat('yyyy-MM-dd').format(date);
