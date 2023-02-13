@@ -25,14 +25,14 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   DateTime _selectedDate = DateTime.now();
   final _taskController = Get.put(TaskController());
-  var notifyHelper;
+  //late NotifyHelper notifyHelper;
 
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    notifyHelper = NotifyHelper();
+    NotifyHelper notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
 
@@ -154,11 +154,16 @@ class _HomepageState extends State<Homepage> {
         height: MediaQuery.of(context).size.height*0.614,
 
         decoration: BoxDecoration(
-
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 10.0,
+              offset: Offset(0, 8)
+            )
+          ],
           color:  context.theme.colorScheme.tertiary,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15)
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20)
           )
         ),
         child: Column(

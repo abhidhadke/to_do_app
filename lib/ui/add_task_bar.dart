@@ -45,9 +45,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
             children: [
               Text('Add Task',
               style: headingStyle,),
-              MyInputField(title: 'Title', hint: 'Enter your title here',controller: _titleController,),
-              MyInputField(title: 'Note', hint: 'Enter note here', controller: _noteController,),
-              MyInputField(title: 'Date', hint: DateFormat('yyyy-MM-dd').format(_selectedDate),
+              MyInputField(title: 'Title:', hint: 'Enter your title here',controller: _titleController,),
+              MyInputField(title: 'Note:', hint: 'Enter note here', controller: _noteController,),
+              MyInputField(title: 'Date:', hint: DateFormat('yyyy-MM-dd').format(_selectedDate),
               widget: IconButton(
                   onPressed: (){
                     _getDateFromUser();
@@ -56,7 +56,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               Row(
                 children: [
                   Expanded(
-                      child: MyInputField(title: 'Start Time', hint: _startTime,widget: IconButton(
+                      child: MyInputField(title: 'Start Time:', hint: _startTime,widget: IconButton(
                         onPressed: (){
                           _getTimeFromUser(isStartTime: true);
                         },
@@ -64,7 +64,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       ) ),),
                   const SizedBox(width: 12,),
                   Expanded(
-                    child: MyInputField(title: 'End Time', hint: _endTime,widget: IconButton(
+                    child: MyInputField(title: 'End Time:', hint: _endTime,widget: IconButton(
                       onPressed: (){
                         _getTimeFromUser(isStartTime: false);
                       },
@@ -72,7 +72,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     ) ),)
                 ],
               ),
-              MyInputField(title: 'Remind', hint: '$_selectedRemind minutes early',
+              MyInputField(title: 'Remind:', hint: '$_selectedRemind minutes early',
                 widget: DropdownButton(
                   icon: const Icon(Icons.arrow_drop_down_outlined,color: Colors.grey,),
                   iconSize: 32,
@@ -94,7 +94,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
-              MyInputField(title: 'Repeat', hint: _selectedRepeat,
+              MyInputField(title: 'Repeat:', hint: _selectedRepeat,
                 widget: DropdownButton(
                   icon: const Icon(Icons.arrow_drop_down_outlined,color: Colors.grey,),
                   iconSize: 32,
@@ -210,7 +210,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Colours', style: titleStyle,),
+        Text('Task Priority:', style: titleStyle,),
         const SizedBox(height: 8,),
         Wrap(
           children: List<Widget>.generate(3, (int index){

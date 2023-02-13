@@ -39,8 +39,8 @@ TextStyle get subHeadingStyle {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 24,
-          fontWeight: FontWeight.bold,
-        color: Get.isDarkMode ? Colors.grey[400] : Colors.grey
+          fontWeight: FontWeight.w700,
+        color: Get.isDarkMode ? Colors.grey[400] : Colors.grey[800]
       )
   );
 }
@@ -49,8 +49,8 @@ TextStyle get headingStyle {
   return GoogleFonts.poppins(
       textStyle: TextStyle(
           fontSize: 30,
-          fontWeight: FontWeight.bold,
-          color: Get.isDarkMode ? Colors.white : Colors.black
+          fontWeight: FontWeight.w700,
+          color: Get.isDarkMode ? Colors.white : Colors.black87
       )
   );
 }
